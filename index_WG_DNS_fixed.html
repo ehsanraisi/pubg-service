@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MUKOPanel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #6c5ce7;
+      --secondary-color: #a29bfe;
+      --dark-color: #2d3436;
+      --light-color: #f5f6fa;
+      --success-color: #00b894;
+      --danger-color: #d63031;
+      --warning-color: #fdcb6e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      font-family: Tahoma, sans-serif;
+      background: 
+        linear-gradient(rgba(15, 15, 15, 0.85), rgba(26, 26, 26, 0.85)),
+        url('https://i.imgur.com/3y494lU.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      direction: rtl;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--light-color);
+      display: flex;
+      align-items: center;
+    }
+
+    .logo i {
+      margin-left: 10px;
+      color: var(--primary-color);
+    }
+
+    .stats {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+    }
+
+    .stats i {
+      margin-left: 5px;
+      color: var(--secondary-color);
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 50px 20px;
+    }
+
+    .panel-btn, .back-btn {
+      padding: 14px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 2px solid #00ffaa;
+      background: rgba(255, 255, 255, 0.05);
+      color: #00ffaa;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffaa;
+      transition: all 0.3s ease;
+      margin: 10px;
+    }
+
+    .panel-btn:hover, .back-btn:hover {
+      background-color: #00ffaa;
+      color: black;
+      box-shadow: 0 0 20px #00ffaa, 0 0 40px #00ffaa;
+    }
+
+    .panel {
+      display: none;
+      padding: 20px;
+      background: 
+        linear-gradient(rgba(15, 15, 15, 0.9), rgba(15, 15, 15, 0.9)),
+        url('https://i.ibb.co/35xybcvP/file-00000000411861f4a6f6a112db685eb8.png') no-repeat center center;
+      background-size: cover;
+      border-radius: 15px;
+      margin: 20px auto;
+      max-width: 1200px;
+      box-shadow: 0 0 20px rgba(0, 255, 170, 0.2);
+      border: 1px solid rgba(0, 255, 170, 0.1);
+    }
+
+    input, select, textarea, button {
+      width: 90%;
+      max-width: 500px;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 16px;
+      background: rgba(20, 20, 20, 0.9);
+      color: #00ffcc;
+      border: 2px solid #00ffaa;
+      border-radius: 12px;
+      display: block;
+      box-shadow: 0 0 12px #00ffaa;
+    }
+
+    textarea {
+      height: 180px;
+      resize: none;
+    }
+
+    #qrcode canvas, #tunsafeQrcode canvas {
+      margin-top: 15px;
+      max-width: 90%;
+    }
+
+    .dns-box {
+      background: #222;
+      padding: 10px;
+      margin: 15px auto;
+      width: 90%;
+      max-width: 500px;
+      border-left: 5px solid #00ff88;
+      border-radius: 8px;
+      color: #00ff88;
+    }
+
+    .dns-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 5px 0;
+    }
+
+    .copy-btn {
+      background: none;
+      color: #00ff88;
+      border: 1px solid #00ff88;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .server-box {
+      background: #1d1d1d;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ffaa;
+      width: 90%;
+      max-width: 400px;
+      margin: 20px auto;
+    }
+
+    .server-box h3 {
+      color: #00ffaa;
+      margin: 0 0 10px;
+    }
+
+    .status {
+      margin-top: 10px;
+      color: gold;
+    }
+
+    .form-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .form-section h2 {
+      margin-bottom: 20px;
+      color: var(--secondary-color);
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-section h2 i {
+      margin-left: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(20, 20, 20, 0.9);
+      border: 2px solid #00ffaa;
+      border-radius: 8px;
+      color: var(--light-color);
+      font-size: 14px;
+      transition: all 0.3s;
+      box-shadow: 0 0 12px #00ffaa;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #00ffaa;
+      background: rgba(20, 20, 20, 0.9);
+      box-shadow: 0 0 15px #00ffaa;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #00ffaa;
+      border: 2px solid #00ffaa;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: #00ffaa;
+      color: black;
+      box-shadow: 0 0 20px #00ffaa, 0 0 40px #00ffaa;
+    }
+
+    .btn-block {
+      display: block;
+      width: 100%;
+    }
+
+    .btn-add {
+      background: #00ffaa;
+      color: black;
+      margin-bottom: 20px;
+    }
+
+    .btn-add:hover {
+      background: #00cc88;
+      box-shadow: 0 0 20px #00ffaa;
+    }
+
+    .result-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .result-title {
+      font-size: 20px;
+      color: var(--secondary-color);
+    }
+
+    .dns-count {
+      background: rgba(0, 184, 148, 0.2);
+      padding: 5px 15px;
+      border-radius: 50px;
+      font-size: 14px;
+    }
+
+    .dns-list {
+      margin-top: 20px;
+    }
+
+    .dns-item {
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      transition: all 0.3s;
+    }
+
+    .dns-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .dns-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .dns-name {
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+
+    .dns-status {
+      background: var(--success-color);
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 12px;
+    }
+
+    .dns-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .detail-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .detail-item span {
+      display: block;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 3px;
+      font-size: 11px;
+    }
+
+    .dns-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .btn-copy {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #00ffaa;
+      color: #00ffaa;
+      padding: 8px 15px;
+      font-size: 13px;
+    }
+
+    .btn-copy:hover {
+      background-color: #00ffaa;
+      color: black;
+    }
+
+    .btn-deactivate {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #00ffaa;
+      color: #00ffaa;
+      padding: 8px 15px;
+      font-size: 13px;
+    }
+
+    .btn-deactivate:hover {
+      background-color: #d63031;
+      color: black;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 0;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .empty-state i {
+      font-size: 50px;
+      margin-bottom: 15px;
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* پاسخ‌گویی برای موبایل */
+    @media (max-width: 768px) {
+      .panel {
+        grid-template-columns: 1fr;
+      }
+      .dns-details {
+        grid-template-columns: 1fr;
+      }
+      .panel-btn, .back-btn {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+      input, select, textarea {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="main-menu" class="button-container">
+    <button class="panel-btn" onclick="showPanel('wg')">⚡ WG PANEL</button>
+    <button class="panel-btn" onclick="showPanel('dns')">🌐 DNS PANEL</button>
+    <button class="panel-btn" onclick="showPanel('setting')">🛠 SETING PANEL</button>
+    <button class="panel-btn" onclick="showPanel('tunsafe')">🔒 TUNSAFE PANEL</button>
+  </div>
+
+  <!-- WG PANEL -->
+  <div id="wg" class="panel">
+    <button class="back-btn" onclick="backToMenu()">🔙 بازگشت</button>
+    <h2>⚡ تولید کانفیگ WireGuard</h2>
+    <input type="text" id="configName" placeholder="نام کانفیگ" />
+    <select id="country">
+      <option value="🇮🇷 ایران">🇮🇷 ایران</option>
+      <option value="🇩🇪 آلمان">🇩🇪 آلمان</option>
+      <option value="🇹🇷 ترکیه">🇹🇷 ترکیه</option>
+      <option value="🇸🇦 عربستان">🇸🇦 عربستان</option>
+      <option value="🇦🇪 امارات">🇦🇪 امارات</option>
+      <option value="🇺🇸 آمریکا">🇺🇸 آمریکا</option>
+      <option value="🇬🇧 انگلیس">🇬🇧 انگلیس</option>
+      <option value="🇫🇷 فرانسه">🇫🇷 فرانسه</option>
+      <option value="🇷🇺 روسیه">🇷🇺 روسیه</option>
+      <option value="🇨🇦 کانادا">🇨🇦 کانادا</option>
+      <option value="🇯🇵 ژاپن">🇯🇵 ژاپن</option>
+      <option value="🇰🇷 کره جنوبی">🇰🇷 کره جنوبی</option>
+      <option value="🇸🇬 سنگاپور">🇸🇬 سنگاپور</option>
+      <option value="🇳🇱 هلند">🇳🇱 هلند</option>
+      <option value="🇨🇭 سوئیس">🇨🇭 سوئیس</option>
+      <option value="🇸🇪 سوئد">🇸🇪 سوئد</option>
+      <option value="🇳🇴 نروژ">🇳🇴 نروژ</option>
+      <option value="🇫🇮 فنلاند">🇫🇮 فنلاند</option>
+      <option value="🇦🇺 استرالیا">🇦🇺 استرالیا</option>
+      <option value="🇳🇿 نیوزیلند">🇳🇿 نیوزیلند</option>
+      <option value="🇧🇷 برزیل">🇧🇷 برزیل</option>
+      <option value="🇮🇳 هند">🇮🇳 هند</option>
+      <option value="🇮🇹 ایتالیا">🇮🇹 ایتالیا</option>
+      <option value="🇪🇸 اسپانیا">🇪🇸 اسپانیا</option>
+    </select>
+    <select id="type">
+      <option value="1"> VIP🏅</option> 
+      <option value="2">طلایی</option>
+      <option value="3">نقره‌ای</option>
+      <option value="4">برنز</option>
+    </select>
+    <input type="number" id="size" placeholder="حجم به گیگ" />
+    <input type="number" id="duration" placeholder="مدت اعتبار به روز" />
+    <input type="number" id="ipv6Count" placeholder="تعداد IPv6 آدرس" min="1" max="200" />
+    <input type="number" id="dnsIpv6Count" placeholder="تعداد IPv6 در DNS" min="1" max="200" />
+    <button onclick="generateConfig()">🚀 تولید کانفیگ</button>
+    <textarea id="configContent" readonly placeholder="کانفیگ در اینجاست..."></textarea>
+    <div class="status" id="status"></div>
+    <button onclick="copyConfig()">📋 کپی کانفیگ</button>
+    <button onclick="saveConfig()">💾 ذخیره فایل</button>
+    <div id="qrcode"></div>
+    <div id="serverCard"></div>
+  </div>
+
+  <!-- DNS PANEL -->
+  <div id="dns" class="panel">
+    <button class="back-btn" onclick="backToMenu()">🔙 بازگشت</button>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <i class="fas fa-bolt"></i>
+          FAST DNS
+        </div>
+        <div class="stats">
+          <i class="fas fa-users"></i>
+          <span id="totalUsers">12,845</span> کاربر تاکنون DNS ایجاد کرده‌اند
+        </div>
+      </header>
+      
+      <div class="panel">
+        <div class="form-section">
+          <h2><i class="fas fa-plus-circle"></i> افزودن DNS جدید</h2>
+          
+          <button class="btn btn-add btn-block" id="addUserBtn">
+            <i class="fas fa-user-plus"></i> افزودن کاربر
+          </button>
+          
+          <div class="form-group">
+            <label for="country">کشور</label>
+            <select id="country" class="form-control">
+              <option value="iran">ایران</option>
+              <option value="finland">فنلاند</option>
+              <option value="turkey">ترکیه</option>
+              <option value="germany">آلمان</option>
+              <option value="uae">امارات</option>
+              <option value="saudi">عربستان</option>
+              <option value="iceland">ایسلند</option>
+              <option value="qatar">قطر</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="duration">مدت زمان (روز)</label>
+            <input type="number" id="duration" class="form-control" min="1" max="365" value="30">
+          </div>
+          
+          <div class="form-group">
+            <label for="volume">حجم مصرفی (گیگابایت)</label>
+            <input type="number" id="volume" class="form-control" min="1" max="1000" value="100">
+          </div>
+          
+          <div class="form-group">
+            <label for="type">نوع DNS</label>
+            <select id="type" class="form-control">
+              <option value="vip">VIP</option>
+              <option value="gold">GOLD</option>
+              <option value="high">HIGH</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="codeCount">تعداد کد</label>
+            <input type="number" id="codeCount" class="form-control" min="1" max="10" value="2">
+          </div>
+          
+          <div class="form-group">
+            <label for="userCount">تعداد کاربران</label>
+            <input type="number" id="userCount" class="form-control" min="1" max="100" value="10">
+          </div>
+          
+          <div class="form-group">
+            <label for="ipVersion">نسل DNS</label>
+            <select id="ipVersion" class="form-control">
+              <option value="ipv4">نسل چهارم (IPv4)</option>
+              <option value="ipv6">نسل ششم (IPv6)</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="simType">نوع سیمکارت</label>
+            <select id="simType" class="form-control">
+              <option value="mci">همراه اول</option>
+              <option value="mtn">ایرانسل</option>
+              <option value="rightel">رایتل</option>
+              <option value="tci">مخابرات</option>
+              <option value="mobinnet">موبایل شاتل</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="boost">تقویت شده</label>
+            <select id="boost" class="form-control">
+              <option value="yes">بله</option>
+              <option value="no">خیر</option>
+            </select>
+          </div>
+          
+          <button class="btn btn-block" id="generateBtn">
+            <i class="fas fa-magic"></i> تولید DNS
+          </button>
+        </div>
+        
+        <div class="result-section">
+          <div class="result-header">
+            <h3 class="result-title">DNS های ایجاد شده</h3>
+            <div class="dns-count" id="dnsCount">0 DNS</div>
+          </div>
+          
+          <div class="dns-list" id="dnsList">
+            <div class="empty-state">
+              <i class="fas fa-cloud"></i>
+              <p>هنوز هیچ DNSی ایجاد نشده است</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETING PANEL -->
+  <div id="setting" class="panel">
+    <button class="back-btn" onclick="backToMenu()">🔙 بازگشت</button>
+    <h2>پنل ساخت ستینگ</h2>
+
+    <label for="deviceName">نام گوشی:</label>
+    <input type="text" id="deviceName">
+
+    <label for="settingType">نوع ستینگ:</label>
+    <select id="settingType">
+      <option value="هدشات">هدشات</option>
+      <option value="ایم">ایم</option>
+      <option value="فیکس لگ">فیکس لگ</option>
+      <option value="خط تیر">خط تیر</option>
+    </select>
+
+    <label for="lineCount">تعداد خطوط (۱ تا ۷۰۰):</label>
+    <input type="number" id="lineCount" min="1" max="700">
+
+    <button onclick="generateSettings()">ساخت ستینگ</button>
+
+    <label for="output">خروجی ستینگ:</label>
+    <textarea id="output" readonly></textarea>
+
+    <button onclick="copyToClipboard()">کپی به کلیپ‌بورد</button>
+  </div>
+
+  <!-- TUNSAFE PANEL -->
+  <div id="tunsafe" class="panel">
+    <button class="back-btn" onclick="backToMenu()">🔙 بازگشت</button>
+    <h2>🔒 تولید کانفیگ TunSafe</h2>
+    
+    <input type="text" id="tunsafeName" placeholder="نام کانفیگ" />
+    <select id="tunsafeCountry">
+      <option value="🇩🇪 آلمان">🇩🇪 آلمان</option>
+      <option value="🇺🇸 آمریکا">🇺🇸 آمریکا</option>
+      <option value="🇬🇧 انگلیس">🇬🇧 انگلیس</option>
+      <option value="🇫🇷 فرانسه">🇫🇷 فرانسه</option>
+      <option value="🇳🇱 هلند">🇳🇱 هلند</option>
+      <option value="🇸🇬 سنگاپور">🇸🇬 سنگاپور</option>
+      <option value="🇯🇵 ژاپن">🇯🇵 ژاپن</option>
+      <option value="🇰🇷 کره جنوبی">🇰🇷 کره جنوبی</option>
+      <option value="🇦🇺 استرالیا">🇦🇺 استرالیا</option>
+      <option value="🇨🇦 کانادا">🇨🇦 کانادا</option>
+    </select>
+    <select id="tunsafeType">
+      <option value="1">VIP🏅</option>
+      <option value="2">طلایی</option>
+      <option value="3">نقره‌ای</option>
+      <option value="4">برنز</option>
+    </select>
+    <input type="number" id="tunsafeSize" placeholder="حجم به گیگ" />
+    <input type="number" id="tunsafeDuration" placeholder="مدت اعتبار به روز" />
+    <input type="number" id="tunsafeIpv6Count" placeholder="تعداد IPv6 آدرس" min="1" max="200" />
+    <input type="number" id="tunsafeDnsIpv6Count" placeholder="تعداد IPv6 در DNS" min="1" max="200" />
+    
+    <button onclick="generateTunSafeConfig()">🚀 تولید کانفیگ</button>
+    <textarea id="tunsafeConfig" readonly placeholder="کانفیگ TunSafe در اینجاست..."></textarea>
+    <div class="status" id="tunsafeStatus"></div>
+    <button onclick="copyTunSafeConfig()">📋 کپی کانفیگ</button>
+    <button onclick="saveTunSafeConfig()">💾 ذخیره فایل</button>
+    <div id="tunsafeQrcode"></div>
+    <div id="tunsafeServerCard"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    function showPanel(id) {
+      document.getElementById('main-menu').style.display = 'none';
+      document.getElementById('wg').style.display = 'none';
+      document.getElementById('dns').style.display = 'none';
+      document.getElementById('setting').style.display = 'none';
+      document.getElementById('tunsafe').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function backToMenu() {
+      document.getElementById('wg').style.display = 'none';
+      document.getElementById('dns').style.display = 'none';
+      document.getElementById('setting').style.display = 'none';
+      document.getElementById('tunsafe').style.display = 'none';
+      document.getElementById('main-menu').style.display = 'flex';
+    }
+
+    function randomIP(prefix = "10.202") {
+      return prefix + "." + Math.floor(Math.random() * 256) + "." + Math.floor(Math.random() * 256);
+    }
+
+    function randomIPv6(prefix = "2001:470:1") {
+      const part1 = Math.floor(Math.random() * 0xFFFF).toString(16);
+      const part2 = Math.floor(Math.random() * 0xFFFF).toString(16);
+      return `${prefix}:${part1}::${part2}`;
+    }
+
+    function randomKey() {
+      const array = new Uint8Array(32);
+      window.crypto.getRandomValues(array);
+      return btoa(String.fromCharCode.apply(null, array));
+    }
+
+    function generateConfig() {
+      const name = document.getElementById("configName").value.trim();
+      const size = document.getElementById("size").value.trim();
+      const duration = document.getElementById("duration").value.trim();
+      const country = document.getElementById("country").value;
+      const ipv6Count = parseInt(document.getElementById("ipv6Count").value || "1");
+      const dnsIpv6Count = parseInt(document.getElementById("dnsIpv6Count").value || "1");
+      if (!name || !size || !duration) {
+        alert("همه فیلدها پر شه داداش!");
+        return;
+      }
+      const privateKey = randomKey();
+      const publicKey = randomKey();
+      const preSharedKey = randomKey();
+      const ipv4 = randomIP();
+      const ipv6List = Array.from({ length: ipv6Count }, () => randomIPv6());
+      const address = `${ipv4}/24, ${ipv6List.join("/64, ")}/64`;
+      const endpoint = `${randomIP()}:${Math.floor(Math.random() * (65535 - 51820) + 51820)}`;
+      const allowedIPs = [
+        randomIP("192.168") + "/32",
+        randomIP("192.168") + "/32"
+      ];
+      const dns = ["1.1.1.1", "1.0.0.1", ...Array.from({ length: dnsIpv6Count }, () => randomIPv6())];
+      const config = `[Interface]
+PrivateKey = ${privateKey}
+Address = ${address}
+DNS = ${dns.join(", ")}
+MTU = 1492
+
+[Peer]
+PublicKey = ${publicKey}
+PresharedKey = ${preSharedKey}
+Endpoint = ${endpoint}
+AllowedIPs = ${allowedIPs.join(", ")}
+PersistentKeepalive = 25`;
+      document.getElementById("configContent").value = config;
+      document.getElementById("qrcode").innerHTML = "";
+      QRCode.toCanvas(document.createElement('canvas'), config, function (err, canvas) {
+        if (!err) document.getElementById("qrcode").appendChild(canvas);
+      });
+      const serverPower = Math.random() > 0.5 ? "قدرت: بسیار بالا" : "قدرت: بالا";
+      document.getElementById("serverCard").innerHTML = `<div class="server-box"><h3>${country}</h3><p>IP سرور: ${ipv4}</p><p>${serverPower}</p><p>مناسب همراه اول، ایرانسل، شاتل، تینا</p></div>`;
+      document.getElementById("status").innerText = `✅ فعال تا ${new Date(Date.now() + duration * 86400000).toLocaleDateString('fa-IR')}`;
+    }
+
+    function copyConfig() {
+      const configContent = document.getElementById("configContent").value;
+      navigator.clipboard.writeText(configContent).then(() => alert("کپی شد ✅"));
+    }
+
+    function saveConfig() {
+      const configContent = document.getElementById("configContent").value;
+      let fileName = document.getElementById("configName").value.trim();
+      if (!fileName.endsWith(".conf")) fileName += ".conf";
+      const blob = new Blob([configContent], { type: "application/octet-stream" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    // SETING PANEL SCRIPT
+    const settingsKeys = [
+      'pointer_speed', 'touch_accuracy', 'window_animation_scale',
+      'transition_animation_scale', 'animator_duration_scale',
+      'click_speed', 'long_press_timeout', 'tap_duration',
+      'touch_slop', 'max_fling_velocity', 'min_fling_velocity'
+    ];
+
+    function getRandomValue(key) {
+      switch (key) {
+        case 'pointer_speed': return Math.floor(Math.random() * 3) + 1;
+        case 'touch_accuracy': return (Math.random() * 2).toFixed(2);
+        case 'window_animation_scale':
+        case 'transition_animation_scale':
+        case 'animator_duration_scale': return (Math.random() * 2).toFixed(1);
+        case 'click_speed': return Math.floor(Math.random() * 41) + 20;
+        case 'long_press_timeout': return Math.floor(Math.random() * 2001) + 500;
+        case 'tap_duration': return Math.floor(Math.random() * 301) + 100;
+        case 'touch_slop': return Math.floor(Math.random() * 20) + 4;
+        case 'max_fling_velocity': return Math.floor(Math.random() * 2000) + 4000;
+        case 'min_fling_velocity': return Math.floor(Math.random() * 500) + 50;
+        default: return 1;
+      }
+    }
+
+    function generateSettings() {
+      const lineCount = Math.min(Math.max(parseInt(document.getElementById('lineCount').value), 1), 700);
+      let output = '';
+      for (let i = 0; i < lineCount; i++) {
+        const key = settingsKeys[Math.floor(Math.random() * settingsKeys.length)];
+        const value = getRandomValue(key);
+        output += key + '=' + value + '\n';
+      }
+      document.getElementById('output').value = output;
+    }
+
+    function copyToClipboard() {
+      const text = document.getElementById('output');
+      text.select();
+      text.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(text.value).then(() => alert('ستینگ کپی شد!'));
+    }
+
+    // TUNSAFE FUNCTIONS
+    function generateTunSafeConfig() {
+      const name = document.getElementById("tunsafeName").value.trim();
+      const size = document.getElementById("tunsafeSize").value.trim();
+      const duration = document.getElementById("tunsafeDuration").value.trim();
+      const country = document.getElementById("tunsafeCountry").value;
+      const ipv6Count = parseInt(document.getElementById("tunsafeIpv6Count").value || "1");
+      const dnsIpv6Count = parseInt(document.getElementById("tunsafeDnsIpv6Count").value || "1");
+      
+      if (!name || !size || !duration) {
+        alert("همه فیلدها پر شه داداش!");
+        return;
+      }
+      
+      const privateKey = randomKey();
+      const publicKey = randomKey();
+      const preSharedKey = randomKey();
+      const ipv4 = randomIP("10.8");
+      const ipv6List = Array.from({ length: ipv6Count }, () => randomIPv6());
+      const address = `${ipv4}/24, ${ipv6List.join("/64, ")}/64`;
+      const endpoint = `${randomIP("10.8")}:51820`;
+      const allowedIPs = [
+        randomIP("192.168") + "/32",
+        randomIP("192.168") + "/32"
+      ];
+      const dns = [randomIP(), "10.202.10.10", "78.157.42.100", ...Array.from({ length: dnsIpv6Count }, () => randomIPv6())];
+      
+      const config = `[Interface]
+PrivateKey = ${privateKey}
+Address = ${address}
+DNS = ${dns.join(", ")}
+MTU = 1420
+
+[Peer]
+PublicKey = ${publicKey}
+PresharedKey = ${preSharedKey}
+Endpoint = ${endpoint}
+AllowedIPs = ${allowedIPs.join(", ")}
+PersistentKeepalive = 25`;
+      
+      document.getElementById("tunsafeConfig").value = config;
+      document.getElementById("tunsafeQrcode").innerHTML = "";
+      QRCode.toCanvas(document.createElement('canvas'), config, function (err, canvas) {
+        if (!err) document.getElementById("tunsafeQrcode").appendChild(canvas);
+      });
+      
+      const serverPower = Math.random() > 0.5 ? "قدرت: بسیار بالا" : "قدرت: بالا";
+      document.getElementById("tunsafeServerCard").innerHTML = `<div class="server-box"><h3>${country}</h3><p>IP سرور: ${ipv4}</p><p>${serverPower}</p><p>مناسب TunSafe و اتصالات پایدار</p></div>`;
+      document.getElementById("tunsafeStatus").innerText = `✅ فعال تا ${new Date(Date.now() + duration * 86400000).toLocaleDateString('fa-IR')}`;
+    }
+
+    function copyTunSafeConfig() {
+      const config = document.getElementById("tunsafeConfig").value;
+      navigator.clipboard.writeText(config).then(() => alert("کپی شد ✅"));
+    }
+
+    function saveTunSafeConfig() {
+      const config = document.getElementById("tunsafeConfig").value;
+      let name = document.getElementById("tunsafeName").value.trim() || "tunsafe";
+      if (!name.endsWith(".conf")) name += ".conf";
+      
+      const blob = new Blob([config], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // DNS PANEL SCRIPTS
+    const countryPrefixes = {
+      iran: { ipv4: '185.', ipv6: '2a0d:' },
+      finland: { ipv4: '95.', ipv6: '2a02:' },
+      turkey: { ipv4: '88.', ipv6: '2a03:' },
+      germany: { ipv4: '78.', ipv6: '2a01:' },
+      uae: { ipv4: '94.', ipv6: '2a06:' },
+      saudi: { ipv4: '85.', ipv6: '2a0a:' },
+      iceland: { ipv4: '82.', ipv6: '2a07:' },
+      qatar: { ipv4: '89.', ipv6: '2a0b:' }
+    };
+
+    let userCount = 12845;
+    document.getElementById('totalUsers').textContent = userCount.toLocaleString('fa-IR');
+
+    let dnsCount = 0;
+
+    function generateRandomIP(version, country) {
+      let prefix = countryPrefixes[country][version];
+      let ip = prefix;
+      
+      if (version === 'ipv4') {
+        for (let i = 0; i < 3; i++) {
+          ip += Math.floor(Math.random() * 256) + '.';
+        }
+        ip = ip.slice(0, -1);
+      } else {
+        for (let i = 0; i < 7; i++) {
+          ip += Math.floor(Math.random() * 65536).toString(16) + ':';
+        }
+        ip = ip.slice(0, -1);
+      }
+      
+      return ip;
+    }
+
+    function generateDNSName(type) {
+      const prefixes = {
+        vip: ['ULTRA', 'PRO', 'ELITE', 'MASTER'],
+        gold: ['GOLD', 'PREMIUM', 'PLUS', 'TURBO'],
+        high: ['FAST', 'SPEED', 'BOOST', 'POWER']
+      };
+      
+      const suffix = ['DNS', 'GAME', 'NET', 'HOST', 'SERVER'];
+      
+      const randomPrefix = prefixes[type][Math.floor(Math.random() * prefixes[type].length)];
+      const randomSuffix = suffix[Math.floor(Math.random() * suffix.length)];
+      const randomNum = Math.floor(Math.random() * 1000);
+      
+      return `${randomPrefix}-${randomSuffix}-${randomNum}`;
+    }
+
+    function formatDate(date) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('fa-IR', options);
+    }
+
+    function addDNSToList(data) {
+      const dnsList = document.getElementById('dnsList');
+      
+      if (dnsList.querySelector('.empty-state')) {
+        dnsList.innerHTML = '';
+      }
+      
+      const dnsItem = document.createElement('div');
+      dnsItem.className = 'dns-item';
+      
+      const now = new Date();
+      const expireDate = new Date();
+      expireDate.setDate(now.getDate() + parseInt(data.duration));
+      
+      dnsItem.innerHTML = `
+        <div class="dns-info">
+          <div class="dns-name">${data.name}</div>
+          <div class="dns-status">فعال</div>
+        </div>
+        <div class="dns-details">
+          <div class="detail-item">
+            <span>DNS</span>
+            ${data.ip}
+          </div>
+          <div class="detail-item">
+            <span>کشور</span>
+            ${document.querySelector(`#country option[value="${data.country}"]`).textContent}
+          </div>
+          <div class="detail-item">
+            <span>نسل</span>
+            ${data.ipVersion === 'ipv4' ? 'IPv4' : 'IPv6'}
+          </div>
+          <div class="detail-item">
+            <span>حجم باقی‌مانده</span>
+            ${data.volume} گیگابایت
+          </div>
+          <div class="detail-item">
+            <span>تاریخ انقضا</span>
+            ${formatDate(expireDate)}
+          </div>
+          <div class="detail-item">
+            <span>نوع</span>
+            ${data.type}
+          </div>
+        </div>
+        <div class="dns-actions">
+          <button class="btn btn-copy" onclick="copyToClipboard('${data.ip}')">
+            <i class="fas fa-copy"></i> کپی DNS
+          </button>
+          <button class="btn btn-deactivate" onclick="deactivateDNS(this)">
+            <i class="fas fa-power-off"></i> غیرفعال کردن
+          </button>
+        </div>
+      `;
+      
+      dnsList.prepend(dnsItem);
+      
+      dnsCount++;
+      document.getElementById('dnsCount').textContent = `${dnsCount} DNS`;
+      
+      userCount++;
+      document.getElementById('totalUsers').textContent = userCount.toLocaleString('fa-IR');
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('DNS با موفقیت کپی شد!');
+      }).catch(err => {
+        console.error('Could not copy text: ', err);
+      });
+    }
+
+    function deactivateDNS(button) {
+      if (confirm('آیا از غیرفعال کردن این DNS اطمینان دارید؟')) {
+        const dnsItem = button.closest('.dns-item');
+        const status = dnsItem.querySelector('.dns-status');
+        
+        status.textContent = 'غیرفعال';
+        status.style.background = 'var(--danger-color)';
+        button.disabled = true;
+        button.style.opacity = '0.7';
+      }
+    }
+
+    document.getElementById('generateBtn').addEventListener('click', function() {
+      const country = document.getElementById('country').value;
+      const duration = document.getElementById('duration').value;
+      const volume = document.getElementById('volume').value;
+      const type = document.getElementById('type').value;
+      const codeCount = document.getElementById('codeCount').value;
+      const userCount = document.getElementById('userCount').value;
+      const ipVersion = document.getElementById('ipVersion').value;
+      const simType = document.getElementById('simType').value;
+      const boost = document.getElementById('boost').value;
+      
+      const dnsData = {
+        country,
+        duration,
+        volume,
+        type,
+        codeCount,
+        userCount,
+        ipVersion,
+        simType,
+        boost,
+        name: generateDNSName(type),
+        ip: generateRandomIP(ipVersion, country)
+      };
+      
+      addDNSToList(dnsData);
+    });
+
+    document.getElementById('addUserBtn').addEventListener('click', function() {
+      const username = prompt('لطفاً نام کاربری را وارد کنید:');
+      if (username) {
+        alert(`کاربر "${username}" با موفقیت اضافه شد!`);
+      }
+    });
+
+    // نمایش تاریخ و زمان فعلی
+    function updateDateTime() {
+      const now = new Date();
+      const dateTime = now.toLocaleString('fa-IR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
+      // می‌توانید این را در هر پنل نمایش دهید، مثلاً در WG PANEL
+      document.getElementById('status').innerText += ` | تاریخ و زمان: ${dateTime}`;
+    }
+    updateDateTime(); // فراخوانی اولیه
+  </script>
+</body>
+</html>
